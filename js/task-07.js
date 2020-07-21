@@ -5,7 +5,7 @@
 */
 
 'use strict';
-let idGenerator = 0;
+let transactionId = 0;
 /*
  * Типов транзацкий всего два.
  * Можно положить либо снять деньги со счета.
@@ -32,11 +32,11 @@ const account = {
    * Принимает сумму и тип транзакции.
    */
   createTransaction(amount, type) {
-    idGenerator = idGenerator += 1;
-    const newTransaction = {};
-    newTransaction.id = idGenerator;
-    newTransaction.type = type;
-    newTransaction.amount = amount;
+    const newTransaction = {
+      id: transactionId += 1,
+      type: type,
+      amount: amount,
+    };
     return newTransaction;
   },
 
@@ -61,12 +61,13 @@ const account = {
    * о том, что снятие такой суммы не возможно, недостаточно средств.
    */
   withdraw(amount) {
-    this.transactions.push(this.createTransaction(amount, Transaction.WITHDRAW));
-    if (amount <= this.balance) {
+      if (amount <= this.balance) {
       this.balance -= amount;
     } else {
       console.log(`!ВНИМАНИЕ: Cнятие суммы ${amount} не возможно, недостаточно средств!`);
+      return;
     }
+    this.transactions.push(this.createTransaction(amount, Transaction.WITHDRAW));
   },
 
   /*

@@ -7,14 +7,16 @@
 
 
 const findBestEmployee = function (employees) {
-  const bestEmployees = Object.keys(employees);
-  for (let i = 1; i < bestEmployees.length; i += 1) {
-    if (employees[bestEmployees[i]] > employees[bestEmployees[0]]) {
-      bestEmployees[0] = bestEmployees[i];
+  let bestEmployee;
+  let valueEmployee = 0;
+  for (const employee in employees) {
+    if (employees[employee] > valueEmployee) {
+      valueEmployee = employees[employee];
+      bestEmployee = employee;
     }
-  };
-  return bestEmployees[0];
-};
+  }
+  return bestEmployee;
+}
 
 /*
  * Вызовы функции для проверки работоспособности твоей реализации.

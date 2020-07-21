@@ -8,15 +8,22 @@
 
 
 const countTotalSalary = function (employees) {
+  let totalSalary = 0;
+  for (const salaryOfEmployee in employees) {
+    totalSalary += employees[salaryOfEmployee];
+  }
+  return totalSalary;
+};
+
+/*
+
   const salaryArray = Object.values(employees);
   let totalSalary = 0;
   for (const salary of salaryArray) {
     totalSalary += salary;
   }
   return totalSalary;
-};
 
-/*
  * Вызовы функции для проверки работоспособности твоей реализации.
  */
 console.log(countTotalSalary({})); // 0
