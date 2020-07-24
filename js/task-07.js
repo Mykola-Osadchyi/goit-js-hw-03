@@ -26,18 +26,16 @@ const account = {
   // История транзакций
   transactions: [],
 
-
   /*
    * Метод создает и возвращает объект транзакции.
    * Принимает сумму и тип транзакции.
    */
   createTransaction(amount, type) {
-    const newTransaction = {
-      id: transactionId += 1,
+    return {
+      id: (transactionId += 1),
       type: type,
       amount: amount,
     };
-    return newTransaction;
   },
 
   /*
@@ -61,13 +59,16 @@ const account = {
    * о том, что снятие такой суммы не возможно, недостаточно средств.
    */
   withdraw(amount) {
-      if (amount <= this.balance) {
+    if (amount <= this.balance) {
       this.balance -= amount;
-    } else {
-      console.log(`!ВНИМАНИЕ: Cнятие суммы ${amount} не возможно, недостаточно средств!`);
+      this.transactions.push(
+        this.createTransaction(amount, Transaction.WITHDRAW),
+      );
       return;
     }
-    this.transactions.push(this.createTransaction(amount, Transaction.WITHDRAW));
+    console.log(
+      `!ВНИМАНИЕ: Cнятие суммы ${amount} не возможно, недостаточно средств!`,
+    );
   },
 
   /*
@@ -96,11 +97,11 @@ const account = {
     let totalAmountOfTransaction = 0;
     for (const amountOfTransaction of this.transactions) {
       if (amountOfTransaction.type === type) {
-        totalAmountOfTransaction += amountOfTransaction.amount; 
+        totalAmountOfTransaction += amountOfTransaction.amount;
       }
     }
     return totalAmountOfTransaction;
-   },
+  },
 };
 
 account.deposit(1000);
